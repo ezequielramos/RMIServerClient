@@ -21,8 +21,58 @@ else:
 
 greeting_maker = Pyro4.Proxy(server_names[keys[0]]) #try to connect to the first server 
 
-try:
-	print(greeting_maker.get_fortune(name))
-except Pyro4.errors.CommunicationError: #if failed to connect to the first server try with the second one
-	greeting_maker = Pyro4.Proxy(server_names[keys[1]])
-	print(greeting_maker.get_fortune(name))
+aMessages = list()
+
+def messages(greeting_maker):
+    if greeting_maker:
+        aMessages = greeting_maker.showMessages()
+        if aMessages:
+            print ("Echoed Messages below: \n")
+            for message in aMessages:
+                print (" - " + str(message) + "\n")
+        else:
+            print ("\nYou did not send any message yet.\n\n")
+
+while True:
+	try:
+		print "#-----------------------------------------#"
+		print "#               MENU APP                  #"
+		print "# Options:                                #"
+		print "# [1] Echo Service                        #"
+		print "# [2] Echoed Messages List                #"
+		print "# [3] Delete Message by seq number        #"
+		print "# [4] Delete Message by content           #"
+		print "# [5] Exit                                #"
+		print "#-----------------------------------------#"
+		option = int(input("Choose one option: "))
+
+		if option == 1:
+			try:
+				message = raw_input("Write your message: ")
+				print (greeting_maker.echoService(message))
+			except:
+				print ("\nSomething is wrong.\n\n")
+		elif option == 2:
+			try:
+				messages(greeting_maker)
+			except:
+				print ("\nSomething is wrong.\n\n")
+		elif option == 3:
+			try:
+				messageSeq = input("Inform the seq number: ")
+				print (greeting_maker.deleteMessageSeq(messageSeq))
+			except:
+				print ("\nSomething is wrong.\n\n")
+		elif option == 4:
+			try:
+				message = raw_input("Inform the message: ")
+				print (greeting_maker.deleteMessageContent(message))
+			except:
+				print ("\nSomething is wrong.\n\n")
+		elif option == 5:
+				print ("\n\nThe connection was finished successfully...\n")
+				break
+
+	except Pyro4.errors.CommunicationError: #if failed to connect to the first server try with the second one
+		greeting_maker = Pyro4.Proxy(server_names[keys[1]])
+		print(greeting_maker.get_fortune(name))
