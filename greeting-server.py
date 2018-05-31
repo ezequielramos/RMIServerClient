@@ -41,13 +41,17 @@ class GreetingMaker(object):
         else:
             return "\nMessage deleted successfully!\n"
 
+daemon = Pyro4.Daemon()                # make a Pyro daemon
+try:
+    ns = Pyro4.locateNS()                  # find the name server
+except Pyro4.errors.NamingError:
+    print('You need to run pyro4-ns before you start a server.')
+    exit()
+
 nameServer = raw_input('Insert server name: ')
 
-daemon = Pyro4.Daemon()                # make a Pyro daemon
-ns = Pyro4.locateNS()                  # find the name server
 uri = daemon.register(GreetingMaker)   # register the greeting maker as a Pyro object
 ns.register('greeting-' + nameServer, uri)   # register the object with a name in the name server
 
 print("Ready.")
 daemon.requestLoop()                   # start the event loop of the server to wait for calls
-
