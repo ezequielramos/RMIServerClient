@@ -1,17 +1,15 @@
 import Pyro4
 
+
 @Pyro4.expose
 class GreetingMaker(object):
-    def get_fortune(self, name):
-        print('Someone called get_fortune method')
-	return nameServer + ": Hello, {0}. Here is your fortune message:\n" \
-               "Tomorrow's lucky number is 12345678.".format(name)
 
-    aMessages = list()
+    def __init__(self):
+        self.aMessages = list()
 
     def messageStorage(self, message):
         self.aMessages.append(message)
-        print aMessages
+        print(self.aMessages)
 
     def echoService(self, message):
         self.messageStorage(message)
@@ -21,19 +19,19 @@ class GreetingMaker(object):
         return self.aMessages
 
     def deleteMessageSeq(self, seq):
-        if aMessages is None:
+        if self.aMessages is None:
             return  "\nYou did not send any message yet.\n\n"
-        elif aMessages.length < seq-1:
+        elif len(self.aMessages) < seq-1:
             return "\nMessage at ", seq-1, "position not found.\n"
         else:
             self.aMessages.pop(seq-1)
             return "\nMessage deleted successfully!\n"  
 
     def deleteMessageContent(self, message):
-        if aMessages is None:
+        if self.aMessages is None:
             return  "\nYou did not send any message yet.\n\n"
         cont = 0
-        for messages in aMessages:
+        for messages in self.aMessages:
             if messages == message:
                 self.aMessages.remove(message)
                 cont = cont+1

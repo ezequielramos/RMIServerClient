@@ -14,11 +14,6 @@ if len(keys) == 0:
 	print("\nCan't find any server available.\n")
 	exit()
 
-if sys.version_info.major == 3:
-    name = input("What is your name? ").strip()
-else:
-	name = raw_input("What is your name? ").strip()
-
 greeting_maker = Pyro4.Proxy(server_names[keys[0]]) #try to connect to the first server 
 
 aMessages = list()
@@ -47,11 +42,8 @@ while True:
 		option = int(input("Choose one option: "))
 
 		if option == 1:
-			try:
-				message = raw_input("Write your message: ")
-				print (greeting_maker.echoService(message))
-			except:
-				print ("\nSomething is wrong.\n\n")
+			message = raw_input("Write your message: ")
+			print (greeting_maker.echoService(message))
 		elif option == 2:
 			try:
 				messages(greeting_maker)
@@ -75,4 +67,4 @@ while True:
 
 	except Pyro4.errors.CommunicationError: #if failed to connect to the first server try with the second one
 		greeting_maker = Pyro4.Proxy(server_names[keys[1]])
-		print(greeting_maker.get_fortune(name))
+		#print(greeting_maker.get_fortune(name))
