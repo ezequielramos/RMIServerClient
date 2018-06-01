@@ -3,7 +3,7 @@ import sys
 
 try:
 	ns = Pyro4.locateNS()
-	server_names = ns.list('greeting-') #this should be returning me all servers registered on pyro's nameserver
+	server_names = ns.list('rmiserver-') #this should be returning me all servers registered on pyro's nameserver
 except Pyro4.errors.NamingError:
 	print("\nFailed to locate the nameserver. Make sure it's running, execute: \n\npyro4-ns\n")
 	exit()

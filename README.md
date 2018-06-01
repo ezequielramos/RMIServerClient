@@ -7,11 +7,11 @@ You need to install Pyro4 and then run pyro4-ns.
 Server:
 
 ```
-$ python greeting-server.py
+$ python server.py
 ```
 
 Client:
 
 ```
-$ python greeting-client.py
+$ python client.py
 ```
