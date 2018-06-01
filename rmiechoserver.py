@@ -25,10 +25,12 @@ class RMIEchoServer(object):
 
     def echoService(self, message):
         self.sendMessageToReplicas(self.name_server, str(message))
+        print('Someone called my echoService :)')
         return self.name_server + ": " + str(message)
 
-    def showMessages(self):
-        return self.aMessages
+    def getMessages(self):
+        print('Someone called my getMessages :)')
+        return (self.name_server, self.aMessages)
 
     def deleteMessageSeq(self, seq):
         if self.aMessages is None:

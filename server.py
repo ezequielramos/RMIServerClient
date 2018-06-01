@@ -15,6 +15,25 @@ while name_server.strip() == '':
 
 rmiEchoServer = RMIEchoServer(name_server)
 
+ns = Pyro4.locateNS()
+server_names = ns.list('rmiserver-') #this should be returning me all servers registered on pyro's nameserver
+keys = list(server_names.keys())
+
+for key in keys:
+    each_server = Pyro4.Proxy(server_names[key])
+
+    if key.split('rmiserver-')[1] == name_server:
+        continue
+
+    try:
+        responseMessage = each_server.getMessages()
+        rmiEchoServer.aMessages = responseMessage[1]
+        print('Server %s send me %d messages.' % (responseMessage[0], len(responseMessage[1]) ) ) 
+        break
+    except Pyro4.errors.CommunicationError:
+        print('Can\'t get messages from server ' + key.split('rmiserver-')[1])
+
+
 uri = daemon.register(rmiEchoServer) # register the greeting maker as a Pyro object
 ns.register('rmiserver-' + name_server, uri) # register the object with a name in the name server
 

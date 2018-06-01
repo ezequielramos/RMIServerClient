@@ -20,7 +20,7 @@ aMessages = list()
 
 def messages(greeting_maker):
     if greeting_maker:
-        aMessages = greeting_maker.showMessages()
+        aMessages = greeting_maker.getMessages()[1]
         if aMessages:
             print ("Echoed Messages below: \n")
             for message in aMessages:
