@@ -7,7 +7,7 @@ class RMIEchoServer(object):
         self.aMessages = list()
         self.name_server = name_server
 
-    def sendMessageToReplicas(self, name_server, message):    
+    def sendMessageToReplicas(self, name_server, message):
         ns = Pyro4.locateNS()
         server_names = ns.list('rmiserver-') #this should be returning me all servers registered on pyro's nameserver
         keys = list(server_names.keys())
@@ -37,7 +37,7 @@ class RMIEchoServer(object):
             return "\nMessage at ", seq-1, "position not found.\n"
         else:
             self.aMessages.pop(seq-1)
-            return "\nMessage deleted successfully!\n"  
+            return "\nMessage deleted successfully!\n"
 
     def deleteMessageContent(self, message):
         if self.aMessages is None:
