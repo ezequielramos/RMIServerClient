@@ -32,6 +32,7 @@ class RMIEchoServer(object):
         print('Someone called my getMessages :)')
         return (self.name_server, self.aMessages)
 
+    '''
     def deleteMessageSeq(self, seq):
         if self.aMessages is None:
             return  "\nYou did not send any message yet.\n\n"
@@ -54,3 +55,4 @@ class RMIEchoServer(object):
             return "Messages containing content: " + message + "not found.\n"
         else:
             return "\nMessage deleted successfully!\n"
+    '''
