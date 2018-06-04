@@ -1,8 +1,18 @@
 # RMIServerClient
 
-Tested with python 2.7.15 and 3.6.5.
+Tested with python 2.7
 
-You need to install Pyro4 and then run pyro4-ns.
+If you're running this on a debian distro you can just run:
+
+```
+$ ./dependencies.sh
+```
+
+It should install all necessary dependencies to run. After that, you should run pyro4-ns.
+
+```
+$ pyro4-ns
+```
 
 Server:
 
