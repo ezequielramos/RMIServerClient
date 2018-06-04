@@ -1,4 +1,4 @@
  #!/bin/bash
-apt-get install python-pip python-dev
+sudo apt-get install python-pip python-dev
 
-python -m pip install -r requirements.txt
+sudo python -m pip install -r requirements.txt

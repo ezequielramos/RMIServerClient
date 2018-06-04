@@ -60,17 +60,4 @@ while True:
 	else:
 		print('Option not available.')
 	
-	os.system('read -s -n 1 -p "Press any key to continue..."') #Will it work on Mac?
-
-	'''elif option == 3:
-		try:
-			messageSeq = input("Inform the seq number: ")
-			print (greeting_maker.deleteMessageSeq(messageSeq))
-		except:
-			print ("\nSomething is wrong.\n\n")
-	elif option == 4:
-		try:
-			message = raw_input("Inform the message: ")
-			print (greeting_maker.deleteMessageContent(message))
-		except:
-			print ("\nSomething is wrong.\n\n")'''
+	raw_input('Press Enter to continue...')
