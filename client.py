@@ -29,8 +29,6 @@ while True:
 	print "# Options:                                #"
 	print "# [1] Echo Service                        #"
 	print "# [2] Echoed Messages List                #"
-	'''print "# [3] Delete Message by seq number        #"
-	print "# [4] Delete Message by content           #"'''
 	print "# [0] Exit                                #"
 	print "#-----------------------------------------#"
 	try:
