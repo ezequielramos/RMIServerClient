@@ -3,12 +3,14 @@ import Pyro4
 @Pyro4.expose
 class RMIEchoServer(object):
 
-    def __init__(self, name_server):
+    def __init__(self, name_server, host='localhost', port=9090):
         self.aMessages = list()
         self.name_server = name_server
+        self.host = host
+        self.port = port
 
     def sendMessageToReplicas(self, name_server, message):
-        ns = Pyro4.locateNS()
+        ns = Pyro4.locateNS(host=self.host,port=self.port) # find the name server)
         server_names = ns.list('rmiserver-') #this should be returning me all servers registered on pyro's nameserver
         keys = list(server_names.keys())
 

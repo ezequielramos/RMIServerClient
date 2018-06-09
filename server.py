@@ -1,16 +1,36 @@
 import Pyro4
 from rmiechoserver import RMIEchoServer
+import sys
+
+HOST='localhost'
+PORT=9090
+
+if len(sys.argv) == 2 or len(sys.argv) > 3:
+	print('''
+If you want to connect to a specific server you need to inform host and port.
+Ex: python client.py localhost 9090
+Or just run "$ python client.py" to use the default settings.
+''')
+	exit()
+
+if len(sys.argv) == 3:
+	HOST = sys.argv[1]
+	try:
+		PORT = int(sys.argv[2])
+	except ValueError:
+		print('%s is a invalid value for port.' % sys.argv[2])
+		exit()
 
 name_server = ''
 
 while name_server.strip() == '':
     name_server = raw_input('Insert server name: ')
 
-rmiEchoServer = RMIEchoServer(name_server)
+rmiEchoServer = RMIEchoServer(name_server,HOST,PORT)
 
 daemon = Pyro4.Daemon() # make a Pyro daemon
 try:
-    ns = Pyro4.locateNS() # find the name server
+    ns = Pyro4.locateNS(host=HOST,port=PORT) # find the name server
     server_names = ns.list('rmiserver-') #this should be returning me all servers registered on pyro's nameserver
     keys = list(server_names.keys())
 
@@ -35,5 +55,5 @@ try:
     daemon.requestLoop() # start the event loop of the server to wait for calls
 
 except Pyro4.errors.NamingError:
-    print("\nFailed to locate the nameserver. Make sure it's running, execute: \n\npyro4-ns\n")
+    print("\nFailed to locate the nameserver on %s:%d. Make sure it's running, execute: \n\npyro4-ns -n %s -p %d\n" % (HOST,PORT,HOST,PORT) )
     exit()

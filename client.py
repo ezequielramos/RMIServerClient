@@ -1,14 +1,34 @@
 import Pyro4
 import os
+import sys
+
+HOST='localhost'
+PORT=9090
+
+if len(sys.argv) == 2 or len(sys.argv) > 3:
+	print('''
+If you want to connect to a specific server you need to inform host and port.
+Ex: python client.py localhost 9090
+Or just run "$ python client.py" to use the default settings.
+''')
+	exit()
+
+if len(sys.argv) == 3:
+	HOST = sys.argv[1]
+	try:
+		PORT = int(sys.argv[2])
+	except ValueError:
+		print('%s is a invalid value for port.' % sys.argv[2])
+		exit()
 
 def tryToUseMethodAnyServer(method, *args):
 
 	try:
-		ns = Pyro4.locateNS()
+		ns = Pyro4.locateNS(host=HOST,port=PORT)
 		server_names = ns.list('rmiserver-') #this should be returning me all servers registered on pyro's nameserver
 		keys = list(server_names.keys())
 	except Pyro4.errors.NamingError:
-		print("\nFailed to locate the nameserver. Make sure it's running, execute: \n\npyro4-ns\n")
+		print("\nFailed to locate the nameserver on %s:%d. Make sure it's running, execute: \n\npyro4-ns -n %s -p %d\n" % (HOST,PORT,HOST,PORT) )
 		return False
 
 	for key in keys:
