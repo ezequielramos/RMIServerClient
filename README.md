@@ -1,5 +1,10 @@
 # RMIServerClient
 
+<a href="https://travis-ci.org/ezequielramos/RMIServerClient">
+  <image src="https://travis-ci.org/ezequielramos/RMIServerClient.png?branch=master">
+  </image>
+</a>
+ 
 Tested with python 2.7
 
 We recommend you to use it on a python virtual environment.
